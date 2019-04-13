@@ -25,10 +25,7 @@
  *   getComposition(Math.sin, Math.asin)(x) => Math.sin(Math.acos(x))
  *
  */
-function getComposition(f,g) {
-    throw new Error('Not implemented');
-}
-
+const getComposition = (...funcs) => (...args) => (Number(funcs.reverse().reduce((args, func) => [func(...args)], args).join('')));
 
 /**
  * Returns the math power function with the specified exponent
@@ -47,7 +44,9 @@ function getComposition(f,g) {
  *
  */
 function getPowerFunction(exponent) {
-    throw new Error('Not implemented');
+    return function (n){
+        return Math.pow(n,exponent);
+    }
 }
 
 
@@ -66,6 +65,9 @@ function getPowerFunction(exponent) {
  */
 function getPolynom() {
     throw new Error('Not implemented');
+    return function(...args){
+        return args.reverse().map((x,i) => args[i]*Math.pow(x,i));
+    }
 }
 
 

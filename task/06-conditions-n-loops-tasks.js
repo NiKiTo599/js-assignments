@@ -30,7 +30,15 @@
  *
  */
 function getFizzBuzz(num) {
-    throw new Error('Not implemented');
+    if(num/3 == Math.floor(num/3) && num/5 == Math.floor(num/5)){
+        return 'FizzBuzz';
+    } else if(num/3 == Math.floor(num/3)){
+        return 'Fizz';
+    }else if(num/5 == Math.floor(num/5)){
+        return 'Buzz';
+    }else{
+        return num;
+    }
 }
 
 
@@ -46,7 +54,8 @@ function getFizzBuzz(num) {
  *   10 => 3628800
  */
 function getFactorial(n) {
-    throw new Error('Not implemented');
+    if(n == 1) return 1;
+    return n*getFactorial(n-1);
 }
 
 
@@ -63,7 +72,12 @@ function getFactorial(n) {
  *   -1,1  =>  0  ( = -1 + 0 + 1 )
  */
 function getSumBetweenNumbers(n1, n2) {
-    throw new Error('Not implemented');
+    let sum = 0;
+    while(n2 >= n1){
+        sum += n1;
+        ++n1;
+    }
+    return sum;
 }
 
 
@@ -82,7 +96,7 @@ function getSumBetweenNumbers(n1, n2) {
  *   10,10,10 =>  true
  */
 function isTriangle(a,b,c) {
-    throw new Error('Not implemented');
+    return a < b+c && b < a + c && c < a + b;
 }
 
 
@@ -119,7 +133,10 @@ function isTriangle(a,b,c) {
  *  
  */
 function doRectanglesOverlap(rect1, rect2) {
-    throw new Error('Not implemented');
+    if(rect1.width < rect2.top || rect2.left > rect1.height){
+        return false;
+    }
+    return true;
 }
 
 
@@ -150,7 +167,7 @@ function doRectanglesOverlap(rect1, rect2) {
  *   
  */
 function isInsideCircle(circle, point) {
-    throw new Error('Not implemented');
+    return Math.pow(circle.radius, 2) > Math.pow(circle.center.x - point.x, 2) + Math.pow(circle.center.y - point.y, 2);
 }
 
 
@@ -166,9 +183,14 @@ function isInsideCircle(circle, point) {
  *   'entente' => null
  */
 function findFirstSingleChar(str) {
-    throw new Error('Not implemented');
-}
-
+    for (let i = 0; i < str.length; i++) {
+        let c = str.charAt(i);
+        if (str.indexOf(c) == i && str.indexOf(c, i + 1) == -1) {
+          return c;
+        }
+      }
+      return null;
+    }
 
 /**
  * Returns the string representation of math interval, specified by two points and include / exclude flags.
@@ -192,7 +214,24 @@ function findFirstSingleChar(str) {
  *
  */
 function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
-    throw new Error('Not implemented');
+    let str = '', r;
+    if(isStartIncluded){
+        str += '['
+    }else{
+        str += '('
+    }
+    if(a > b){
+        r = a;
+        a = b;
+        b = r;
+    }
+    str += `${a}, ${b}`
+    if(isEndIncluded){
+        str += ']'
+    } else{
+        str += ')'
+    }
+    return str;
 }
 
 
@@ -226,7 +265,7 @@ function reverseString(str) {
  *   34143 => 34143
  */
 function reverseInteger(num) {
-    throw new Error('Not implemented');
+    return Number(num.toString().split('').reverse().join(''));
 }
 
 
@@ -251,7 +290,23 @@ function reverseInteger(num) {
  *   4916123456789012 => false
  */
 function isCreditCardNumber(ccn) {
-    throw new Error('Not implemented');
+    let sum = 0;
+    ccn = ccn.toString().split('');
+    for (let i = 0; i < ccn.length; i++) {
+      let num = parseInt(ccn[i]);
+  
+      if ((ccn.length - i) % 2 === 0) {
+        num = num * 2;
+  
+        if (num > 9) {
+          num = num - 9;
+        }
+      }
+  
+      sum += num;
+    }
+  
+    return sum % 10 === 0;
 }
 
 
@@ -269,8 +324,18 @@ function isCreditCardNumber(ccn) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(num) {
-    throw new Error('Not implemented');
+function getDigitalRoot(n) {
+    if(n > 10){
+        var sum = 0;
+        var value = n;
+      while (value) {
+          sum += value % 10;
+          value = Math.floor(value / 10);
+        }
+        return getDigitalRoot(sum);
+        }else{
+        return n;
+        }
 }
 
 
@@ -296,7 +361,34 @@ function getDigitalRoot(num) {
  *   '{[(<{[]}>)]}' = true 
  */
 function isBracketsBalanced(str) {
-    throw new Error('Not implemented');
+    var br = "(){}[]<>";
+    // стек открытых скобок
+    var st = [];
+    // бежим по всей строке
+    for (var i = 0; i < str.length; ++i) {
+        // текущий символ
+        var ch = str[i];
+        // ищем символ в скобках
+        var ind = br.indexOf(ch);
+        // если скобка найдена
+        if (ind >= 0) {
+            // проверяем, какая это скобка
+            if (ind & 1) {
+                // если закрывающая скобка, проверяем стек
+                // стек пуст - плохо
+                if (!st.length) return false;
+                // извлекаем последнюю открытую скобку из стека
+                var last_br = st.pop();
+                // если она не соответствует закрывающей скобке - тоже плохо
+                if (last_br != br[ind - 1]) return false;
+            } else { 
+                // открывающую скобку просто пихаем в стек
+                st.push(ch);
+            }
+        }
+    }
+    // если после обхода всей строки стек пуст - всё ок
+    return !st.length;
 }
 
 
