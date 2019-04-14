@@ -72,6 +72,7 @@ function getRegexForPitSpot() {
  * @return {RegExp}
  */
 function getRegexForIPv4() {
+   throw new Error('Not implemented');
    return RegExp("^\d")
 }
 
