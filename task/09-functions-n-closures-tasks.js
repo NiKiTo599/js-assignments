@@ -106,7 +106,15 @@ function memoize(func) {
  * retryer() => 2
  */
 function retry(func, attempts) {
-    throw new Error('Not implemented');
+    return function() {
+        for(let i = 0; i < attempts; i++){
+            try {
+                return func();
+            } catch(e) {
+                continue;
+            }
+        }
+    }
 }
 
 
@@ -152,7 +160,10 @@ function logger(func, logFunc) {
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
 function partialUsingArguments(fn) {
-    throw new Error('Not implemented');
+    let args = Array.from(arguments).slice(1);    
+    return function() {
+        return args.concat(Array.from(arguments)).join('');
+    }
 }
 
 
@@ -173,7 +184,9 @@ function partialUsingArguments(fn) {
  *   getId10() => 11
  */
 function getIdGeneratorFunction(startFrom) {
-    throw new Error('Not implemented');
+    return function(){
+        return startFrom++;
+    }
 }
 
 

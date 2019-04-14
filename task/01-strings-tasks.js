@@ -99,7 +99,7 @@ function getFirstChar(value) {
  *   '\tHello, World! ' => 'Hello, World!'
  */
 function removeLeadingAndTrailingWhitespaces(value) {
-    throw new Error('Not implemented');
+    return value.trim();
 }
 
 /**
@@ -138,7 +138,7 @@ function repeatString(value, count) {
  *   'ABABAB','BA' => 'ABAB'
  */
 function removeFirstOccurrences(str, value) {
-    throw new Error('Not implemented');
+    return str.slice(0,str.indexOf(value)) + str.slice(str.indexOf(value)+value.length);
 }
 
 /**
@@ -153,7 +153,7 @@ function removeFirstOccurrences(str, value) {
  *   '<a>' => 'a'
  */
 function unbracketTag(str) {
-    throw new Error('Not implemented');
+    return str.slice(1,str.length-1);
 }
 
 
@@ -168,7 +168,7 @@ function unbracketTag(str) {
  *  'abcdefghijklmnopqrstuvwxyz' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
  */
 function convertToUpperCase(str) {
-    throw new Error('Not implemented');
+    return str.toUpperCase();
 }
 
 /**
@@ -182,7 +182,7 @@ function convertToUpperCase(str) {
  *   'info@gmail.com' => ['info@gmail.com']
  */
 function extractEmails(str) {
-    throw new Error('Not implemented');
+    return str.split(';');
 }
 
 /**
@@ -209,9 +209,28 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-    throw new Error('Not implemented');
-}
-
+    var arr = []; 
+    var n = height;
+    for (var i = 0; i <= width - 1; i++) {
+        if (i == 0) {arr[0]= "┌"; }
+         else if (i == width - 1) {arr[0] += "┐"; }
+         else {arr[0] += "─";} 
+    }
+    arr[0] += '\n';
+    for (var i = 0; i <= height - 3; i++) {
+        for (var j = 0; j <= width - 1; j++) {
+            if (j == 0) { arr[i+1] = '│' ;}
+                else if (j == width - 1) { arr[i+1] += '│\n';}
+                        else { arr[i+1] += ' ';} 
+        }   
+    }
+    for (var i = 0; i <= width - 1; i++) {
+        if (i == 0) {arr[height-1]= "└" }
+         else if (i == width - 1) {arr[height-1] += "┘\n"; }
+                else {arr[height-1] += "─";} 
+    }
+    return arr.join('');
+ }
 
 /**
  * Encode specified string with ROT13 cipher
@@ -229,7 +248,25 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-    throw new Error('Not implemented');
+    let strin = '';
+    for(let i = 0; i < str.length; i++){
+        if(str[i] == ' ' || str[i] == '?' || str[i] == '!'){
+            strin += str[i];
+            continue;
+        }
+        let code = str.charCodeAt(i) + 13;
+        if(str.charCodeAt(i) >= 97 && code > 122){
+            code = Math.abs(123 - code) + 97;
+        }
+        if(str.charCodeAt(i) < 97 && code > 97){
+            code = Math.abs(90 - code) + 64;
+        }
+        if(str.charCodeAt(i) <= 90 && str.charCodeAt(i) >= 65 && code > 90){
+            code = Math.abs(90 - code) + 64;
+        }
+        strin += String.fromCharCode(code);
+    }
+    return strin;
 }
 
 /**
@@ -246,7 +283,11 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-    throw new Error('Not implemented');
+    if(typeof value == "string" || value instanceof String){
+        return true;
+    } else{
+        return false;
+    }
 }
 
 
@@ -275,7 +316,11 @@ function isString(value) {
  *   'K♠' => 51
  */
 function getCardId(value) {
-    throw new Error('Not implemented');
+    let arr = ['A♣','2♣','3♣','4♣','5♣','6♣','7♣','8♣','9♣','10♣','J♣','Q♣','K♣',
+    'A♦','2♦','3♦','4♦','5♦','6♦','7♦','8♦','9♦','10♦','J♦','Q♦','K♦',
+    'A♥','2♥','3♥','4♥','5♥','6♥','7♥','8♥','9♥','10♥','J♥','Q♥','K♥',
+    'A♠','2♠','3♠','4♠','5♠','6♠','7♠','8♠','9♠','10♠','J♠','Q♠','K♠']
+    return arr.indexOf(value);
 }
 
 

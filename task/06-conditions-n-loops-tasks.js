@@ -362,32 +362,20 @@ function getDigitalRoot(n) {
  */
 function isBracketsBalanced(str) {
     var br = "(){}[]<>";
-    // стек открытых скобок
     var st = [];
-    // бежим по всей строке
     for (var i = 0; i < str.length; ++i) {
-        // текущий символ
         var ch = str[i];
-        // ищем символ в скобках
         var ind = br.indexOf(ch);
-        // если скобка найдена
         if (ind >= 0) {
-            // проверяем, какая это скобка
             if (ind & 1) {
-                // если закрывающая скобка, проверяем стек
-                // стек пуст - плохо
                 if (!st.length) return false;
-                // извлекаем последнюю открытую скобку из стека
                 var last_br = st.pop();
-                // если она не соответствует закрывающей скобке - тоже плохо
                 if (last_br != br[ind - 1]) return false;
             } else { 
-                // открывающую скобку просто пихаем в стек
                 st.push(ch);
             }
         }
     }
-    // если после обхода всей строки стек пуст - всё ок
     return !st.length;
 }
 
@@ -425,6 +413,8 @@ function isBracketsBalanced(str) {
  */
 function timespanToHumanString(startDate, endDate) {
     throw new Error('Not implemented');
+    let time = new Date(endDate - startDate);
+    return time;
 }
 
 
@@ -448,7 +438,7 @@ function timespanToHumanString(startDate, endDate) {
  *    365, 10 => '365'
  */
 function toNaryString(num, n) {
-    throw new Error('Not implemented');
+    return num.toString(n);
 }
 
 
@@ -523,7 +513,17 @@ function getMatrixProduct(m1, m2) {
  *
  */
 function evaluateTicTacToePosition(position) {
-    throw new Error('Not implemented');
+    for(let i = 0; i < position.length; i++){
+        for(let j = 0; j <= 3; j++){
+            if(position[i][j] == position[i][j+1] && position[i][j] == position[i][j+2]){
+                return position[i][j];
+            }
+            if(position[i][j] == position[i+1][j+1] && position[i][j] == position[i+2][j+2]){
+                return position[i][j];
+            }
+        }
+    }
+    return undefined;
 }
 
 
